@@ -1,19 +1,20 @@
-import axios from "axios";
-import { useEffect } from "react";
-import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./Pages/Home.jsx";
+import About from "./Pages/About.jsx";
+import Layout from "./Components/Layout.jsx";
+import "./App.css"
+
 
 function App() {
-  const [name, setName] = useState("");
-
-  useEffect(() => {
-    axios.get("/api/name").then((res) => {
-      setName(res.data);
-    });
-  });
   return (
-    <>
-      <h1 className="bg-green-800 ">{name}</h1>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
