@@ -1,18 +1,18 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./Pages/Home.jsx";
-import About from "./Pages/About.jsx";
-import Layout from "./Components/Layout.jsx";
-import "./App.css"
 
+import ReaderLayout from "./Megapages/ReaderLayout.jsx";
+
+import IndexLayout from "./Megapages/IndexLayout.jsx";
+import "./App.css";
+import IndexAbout from "./Pages/IndexAbout.jsx";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-        </Route>
+        <Route path="/" element={<IndexLayout />}></Route>
+        <Route path="/Reader" element={<ReaderLayout />}></Route>
+        <Route path="/about" element={<IndexAbout />}></Route>
       </Routes>
     </BrowserRouter>
   );
