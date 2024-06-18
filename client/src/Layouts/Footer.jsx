@@ -1,5 +1,3 @@
-import React from "react";
-
 function Footer() {
   return (
     <div className="min-h-[200px] mt-1 shadow-md rounded-tr-lg static bottom-0 bg-[#538392]">
