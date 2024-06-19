@@ -1,14 +1,19 @@
 import { Link } from "react-router-dom";
-import logo from "../assets/logo.png";
+import logo from "../Components/assets/logo.png";
 import { InfoSection, SignUp, LogIn } from "../Components/IndexComponents";
 
 import { useState } from "react";
 
 function IndexLayout() {
   const [formBoolean, setFormBoolean] = useState(false);
+  const visibleLogin = () => {
+    setFormBoolean((prev) => {
+      return !prev;
+    });
+  };
 
   return (
-    <div className="h-fit">
+    <div className="h-fit static">
       <header className=" h-24 bg-custom-dark rounded-b-lg w-full grid grid-cols-12 ">
         <div className="logo-section col-span-3 grid grid-cols-2 ">
           <div className="logo-image col-span-1 ">
@@ -24,17 +29,13 @@ function IndexLayout() {
         <div className="col-span-7"></div>
         <div className="col-span-1  flex flex-col h-[75px] w-full border-4 mt-1 place-content-center mx-auto border-r-custom-slate200 border-b-custom-slate200 border-t-custom-slate700 border-l-slate-700 ">
           <button
-            onClick={() => {
-              setFormBoolean(false);
-            }}
+            onClick={visibleLogin}
             className="border-2 p-1 px-1  hover:text-sm  bg-[#538292]  hover:bg-[#6295a2] font-bold font-mono   border-r-custom-slate700 border-b-custom-slate700 border-t-custom-slate200 border-l-custom-slate200  shadow-2xl  hover:shadow-inner"
           >
             Sign Up
           </button>
           <button
-            onClick={() => {
-              setFormBoolean(true);
-            }}
+            onClick={visibleLogin}
             className="border-2 p-1 px-1 hover:text-sm   bg-[#538292]  hover:bg-[#6295a2] font-mono font-bold    border-r-custom-slate700 border-b-custom-slate700 border-t-custom-slate200 border-l-custom-slate200 shadow-2xl  hover:shadow-inner"
           >
             Log in
@@ -54,7 +55,8 @@ function IndexLayout() {
 
       <div className=" text-center h-screen w-full rounded-lg  bg-custom-lessLight m-1  grid grid-cols-12    ">
         <InfoSection />
-        {formBoolean ? <LogIn /> : <SignUp />}
+
+        {formBoolean ? <LogIn /> : <SignUp visibleLogin={visibleLogin} />}
       </div>
     </div>
   );
