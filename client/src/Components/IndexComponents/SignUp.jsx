@@ -1,10 +1,25 @@
+/* eslint-disable react/prop-types */
+import axios from "axios";
 import { useState } from "react";
 import { ObjectHasValue } from "../../utils/ObjectHasValue";
 import { SignUpBtnClass } from "../../tailwindClass/BtnStyle";
-import axios from "axios";
+import {
+  Container,
+  XButton,
+  ErrTitle,
+  ErrDesc,
+  SucTitle,
+} from "../../Custom/Toast/ToastClass";
+import Toast from "../../Custom/Toast/Toast";
 import Input from "./Input";
 
-function SignUp() {
+function SignUp({ visibleLogin }) {
+  const [toast, setToast] = useState({
+    visible: false,
+    title: "",
+    message: "",
+  });
+
   const [userFields, setUserFields] = useState({
     username: "",
     fullname: "",
@@ -23,16 +38,57 @@ function SignUp() {
     });
   };
 
+  const cancelToast = () => {
+    setToast({ visible: false });
+  };
+
+  if (toast.visible === true) {
+    setTimeout(() => {
+      setToast((prevToast) => ({
+        ...prevToast,
+        visible: false,
+      }));
+    }, 3000);
+  }
+
   const createUser = (event) => {
     event.preventDefault();
     if (ObjectHasValue(userFields)) {
-      axios.post("/api/v1/users/register", userFields).then((res) => {
-        console.log(res.data);
-      });
+      try {
+        axios
+          .post("/api/v1/users/register", userFields)
+          .then((res) => {
+            const response = res.data;
+            console.log(response);
+            setToast({
+              visible: true,
+              title: "Success",
+              message: response.message,
+            });
+
+            setTimeout(visibleLogin, 3000);
+          })
+          .catch((err) => {
+            const response = err.response.data;
+            console.log(response);
+            setToast({
+              visible: true,
+              title: "Failed",
+              message: response.message,
+            });
+          });
+      } catch (error) {
+        console.log(error);
+      }
     } else {
-      console.log("NO");
+      setToast({
+        visible: true,
+        title: "Failed",
+        message: "Please Fill All Field",
+      });
     }
   };
+
   return (
     <>
       <div className=" col-span-5 h-auto place-content-center ">
@@ -75,6 +131,18 @@ function SignUp() {
             type="password"
             handleUserInput={handleUserInput}
           />
+          {toast.visible && (
+            <Toast
+              title={toast.title}
+              message={toast.message}
+              Container={Container}
+              XButton={XButton}
+              ErrTitle={ErrTitle}
+              ErrDesc={ErrDesc}
+              SucTitle={SucTitle}
+              cancelToast={cancelToast}
+            />
+          )}
 
           <button className={SignUpBtnClass}>Sign Up</button>
         </form>

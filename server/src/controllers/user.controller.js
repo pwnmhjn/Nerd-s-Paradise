@@ -70,7 +70,8 @@ const userLogin = AsyncWrap(async (req, res) => {
     throw ErrorAPI(400, 'User is Not Registered');
   }
   // check if password is correct or not
-  const isPasswordCorrect = user.isPasswordCorrect(password);
+  const isPasswordCorrect = await user.isPasswordCorrect(password);
+  // console.log(`controller :${isPasswordCorrect}`);
 
   if (isPasswordCorrect === false) {
     throw new ErrorAPI(400, 'Password is Incorrect');
