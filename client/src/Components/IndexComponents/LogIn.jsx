@@ -1,25 +1,16 @@
 import axios from "axios";
 import { useState } from "react";
 import { LogInBtnClass } from "../../tailwindClass/BtnStyle";
-
-import Toast from "../../Custom/Toast/Toast";
-import {
-  Container,
-  XButton,
-  ErrTitle,
-  ErrDesc,
-  SucTitle,
-} from "../../Custom/Toast/ToastClass";
+import { throwFailed, throwSuccess } from "../../../features/toast/toastSlice";
+import { useDispatch } from "react-redux";
 import Input from "./Input";
 import { ObjectHasValue } from "../../utils/ObjectHasValue";
 import { useNavigate } from "react-router-dom";
 
 function LogIn() {
-  const [toast, setToast] = useState({
-    visible: false,
-    title: "",
-    message: "",
-  });
+  const Navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const [userFields, setUserFields] = useState({
     username: "",
@@ -36,20 +27,6 @@ function LogIn() {
     });
   };
 
-  const cancelToast = () => {
-    setToast({ visible: false });
-  };
-
-  if (toast.visible === true) {
-    setTimeout(() => {
-      setToast((prevToast) => ({
-        ...prevToast,
-        visible: false,
-      }));
-    }, 3000);
-  }
-  const Navigate = useNavigate();
-
   const LogIn = (event) => {
     event.preventDefault();
     if (ObjectHasValue(userFields)) {
@@ -58,30 +35,36 @@ function LogIn() {
           .post("/api/v1/users/login", userFields)
           .then((res) => {
             const response = res.data;
-            setToast({
-              visible: true,
-              title: "Success",
-              message: response.message,
-            });
+            dispatch(
+              throwSuccess({
+                visible: true,
+                title: "Failed",
+                message: response.message,
+              })
+            );
             Navigate("/about");
           })
           .catch((err) => {
             const response = err.response.data;
-            setToast({
-              visible: true,
-              title: "Failed",
-              message: response.message,
-            });
+            dispatch(
+              throwFailed({
+                visible: true,
+                title: "Failed",
+                message: response.message,
+              })
+            );
           });
       } catch (error) {
         console.log(error);
       }
     } else {
-      setToast({
-        visible: true,
-        title: "Failed",
-        message: "Password or Username is Missing",
-      });
+      dispatch(
+        throwFailed({
+          visible: true,
+          title: "Failed",
+          message: "Password or Username is Missing",
+        })
+      );
     }
   };
   return (
@@ -108,18 +91,7 @@ function LogIn() {
             type="password"
             handleUserInput={handleUserInput}
           />
-          {toast.visible && (
-            <Toast
-              title={toast.title}
-              message={toast.message}
-              Container={Container}
-              XButton={XButton}
-              ErrTitle={ErrTitle}
-              ErrDesc={ErrDesc}
-              SucTitle={SucTitle}
-              cancelToast={cancelToast}
-            />
-          )}
+
           <button className={LogInBtnClass}>Log In</button>
         </form>
       </div>

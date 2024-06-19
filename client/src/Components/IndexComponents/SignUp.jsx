@@ -3,22 +3,13 @@ import axios from "axios";
 import { useState } from "react";
 import { ObjectHasValue } from "../../utils/ObjectHasValue";
 import { SignUpBtnClass } from "../../tailwindClass/BtnStyle";
-import {
-  Container,
-  XButton,
-  ErrTitle,
-  ErrDesc,
-  SucTitle,
-} from "../../Custom/Toast/ToastClass";
-import Toast from "../../Custom/Toast/Toast";
+import { throwFailed, throwSuccess } from "../../../features/toast/toastSlice";
+import { useDispatch } from "react-redux";
+
 import Input from "./Input";
 
 function SignUp({ visibleLogin }) {
-  const [toast, setToast] = useState({
-    visible: false,
-    title: "",
-    message: "",
-  });
+  const dispatch = useDispatch();
 
   const [userFields, setUserFields] = useState({
     username: "",
@@ -38,19 +29,6 @@ function SignUp({ visibleLogin }) {
     });
   };
 
-  const cancelToast = () => {
-    setToast({ visible: false });
-  };
-
-  if (toast.visible === true) {
-    setTimeout(() => {
-      setToast((prevToast) => ({
-        ...prevToast,
-        visible: false,
-      }));
-    }, 3000);
-  }
-
   const createUser = (event) => {
     event.preventDefault();
     if (ObjectHasValue(userFields)) {
@@ -60,32 +38,38 @@ function SignUp({ visibleLogin }) {
           .then((res) => {
             const response = res.data;
             console.log(response);
-            setToast({
-              visible: true,
-              title: "Success",
-              message: response.message,
-            });
+            dispatch(
+              throwSuccess({
+                visible: true,
+                title: "Success",
+                message: response.message,
+              })
+            );
 
             setTimeout(visibleLogin, 3000);
           })
           .catch((err) => {
             const response = err.response.data;
-            console.log(response);
-            setToast({
-              visible: true,
-              title: "Failed",
-              message: response.message,
-            });
+
+            dispatch(
+              throwFailed({
+                visible: true,
+                title: "Failed",
+                message: response.message,
+              })
+            );
           });
       } catch (error) {
         console.log(error);
       }
     } else {
-      setToast({
-        visible: true,
-        title: "Failed",
-        message: "Please Fill All Field",
-      });
+      dispatch(
+        throwFailed({
+          visible: true,
+          title: "Failed",
+          message: "Please Fill All Fields",
+        })
+      );
     }
   };
 
@@ -131,18 +115,6 @@ function SignUp({ visibleLogin }) {
             type="password"
             handleUserInput={handleUserInput}
           />
-          {toast.visible && (
-            <Toast
-              title={toast.title}
-              message={toast.message}
-              Container={Container}
-              XButton={XButton}
-              ErrTitle={ErrTitle}
-              ErrDesc={ErrDesc}
-              SucTitle={SucTitle}
-              cancelToast={cancelToast}
-            />
-          )}
 
           <button className={SignUpBtnClass}>Sign Up</button>
         </form>

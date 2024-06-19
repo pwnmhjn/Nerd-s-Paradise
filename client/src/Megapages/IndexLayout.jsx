@@ -1,16 +1,38 @@
 import { Link } from "react-router-dom";
 import logo from "../Components/assets/logo.png";
 import { InfoSection, SignUp, LogIn } from "../Components/IndexComponents";
-
+import Toast from "../Custom/Toast/Toast";
+import { useSelector, useDispatch } from "react-redux";
+import { remove } from "../../features/toast/toastSlice";
+import {
+  Container,
+  XButton,
+  ErrTitle,
+  ErrDesc,
+  SucTitle,
+} from "../Custom/Toast/ToastClass";
 import { useState } from "react";
 
 function IndexLayout() {
+  const toast = useSelector((state) => state.toast);
+  const dispatch = useDispatch();
+
   const [formBoolean, setFormBoolean] = useState(false);
   const visibleLogin = () => {
     setFormBoolean((prev) => {
       return !prev;
     });
   };
+
+  const cancelToast = () => {
+    dispatch(remove(false));
+  };
+
+  if (toast.visible === true) {
+    setTimeout(() => {
+      dispatch(remove(false));
+    }, 3000);
+  }
 
   return (
     <div className="h-fit static">
@@ -58,6 +80,19 @@ function IndexLayout() {
 
         {formBoolean ? <LogIn /> : <SignUp visibleLogin={visibleLogin} />}
       </div>
+
+      {toast.visible && (
+        <Toast
+          title={toast.title}
+          message={toast.message}
+          cancelToast={cancelToast}
+          Container={Container}
+          XButton={XButton}
+          ErrTitle={ErrTitle}
+          ErrDesc={ErrDesc}
+          SucTitle={SucTitle}
+        />
+      )}
     </div>
   );
 }
