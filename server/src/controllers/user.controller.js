@@ -67,7 +67,7 @@ const userLogin = AsyncWrap(async (req, res) => {
   const user = await User.findOne({ username });
 
   if (!user) {
-    throw ErrorAPI(400, 'User is Not Registered');
+    throw new ErrorAPI(400, 'User is Not Registered');
   }
   // check if password is correct or not
   const isPasswordCorrect = await user.isPasswordCorrect(password);

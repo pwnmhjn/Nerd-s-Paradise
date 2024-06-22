@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        custom: {
+        index: {
           dark: "#538392",
           lessDark: "#6295A2",
           light: "#80B9AD",
@@ -15,6 +15,12 @@ export default {
           blue: "#0ea5e9",
           red: "#f43f5e",
           black: "#1e293b",
+        },
+        author: {
+          dark: "#222831",
+          lessDark: "#31363F",
+          light: "#76ABAE",
+          lessLight: "#EEEEEE",
         },
       },
       fontFamily: {},

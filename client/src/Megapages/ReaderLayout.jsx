@@ -1,13 +1,13 @@
-import Header from "../Layouts/Header";
-import Sidebar from "../Layouts/Sidebar";
-import Footer from "../Layouts/Footer";
 import { Outlet } from "react-router-dom";
+import Header from "../Components/ReaderComponents/Layouts/Header";
+import Sidebar from "../Components/ReaderComponents/Layouts/Sidebar";
+import Footer from "../Components/ReaderComponents/Layouts/Footer";
 
 function ReaderLayout() {
   return (
-    <div className=" bg-[#b3e2a7]">
+    <div className="h-fit grid grid-rows-12 bg-author-lessLight">
       <Header />
-      <div className="grid grid-cols-12 gap-2 ">
+      <div className="row-span-10 grid grid-cols-12">
         <Sidebar />
         <Outlet />
       </div>

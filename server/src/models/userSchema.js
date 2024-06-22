@@ -39,6 +39,16 @@ const userSchema = new Schema(
       type: String,
       required: [true, 'Password is Required'],
     },
+    author: {
+      isAuthor: {
+        type: Boolean,
+        default: false,
+      },
+      _id: {
+        type: Schema.Types.ObjectId,
+        ref: 'Author',
+      },
+    },
     readList: [
       {
         type: mongoose.Types.ObjectId,

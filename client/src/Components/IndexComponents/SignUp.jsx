@@ -5,10 +5,11 @@ import { ObjectHasValue } from "../../utils/ObjectHasValue";
 import { SignUpBtnClass } from "../../tailwindClass/BtnStyle";
 import { throwFailed, throwSuccess } from "../../../features/toast/toastSlice";
 import { useDispatch } from "react-redux";
+import { setTrue } from "../../../features/header/headerSlice";
 
 import Input from "./Input";
 
-function SignUp({ visibleLogin }) {
+function SignUp() {
   const dispatch = useDispatch();
 
   const [userFields, setUserFields] = useState({
@@ -45,8 +46,9 @@ function SignUp({ visibleLogin }) {
                 message: response.message,
               })
             );
-
-            setTimeout(visibleLogin, 3000);
+            setTimeout(() => {
+              dispatch(setTrue(true));
+            }, 3000);
           })
           .catch((err) => {
             const response = err.response.data;
@@ -79,9 +81,9 @@ function SignUp({ visibleLogin }) {
         <form
           action=""
           onSubmit={createUser}
-          className=" flex flex-col items-center mx-auto  h-[600px] place-content-center bg-custom-light  w-[400px] gap-3  border-4  border-b-custom-slate700 border-r-custom-slate200 border-l-custom-slate700 border-t-custom-slate200  "
+          className=" flex flex-col items-center mx-auto  h-[600px] place-content-center bg-index-light  w-[400px] gap-3  border-4  border-b-index-slate700 border-r-index-slate200 border-l-index-slate700 border-t-index-slate200  "
         >
-          <span className="h-10 w-[200px] font-mono text-l border-4 rounded-xl font-bold border-t-slate-700 text-center border-l-slate-700 ">
+          <span className="h-10 w-[200px] font-mono text-l border-4 rounded-xl font-bold border-t-index-slate700 text-center border-l-index-slate700 border-b-index-slate200 border-r-index-slate200 ">
             <h1 className="mt-[5px]">Register Yourself</h1>
           </span>
 

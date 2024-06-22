@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 
 function LogIn() {
   const Navigate = useNavigate();
-
   const dispatch = useDispatch();
 
   const [userFields, setUserFields] = useState({
@@ -42,7 +41,7 @@ function LogIn() {
                 message: response.message,
               })
             );
-            Navigate("/about");
+            Navigate("/reader");
           })
           .catch((err) => {
             const response = err.response.data;
@@ -73,9 +72,9 @@ function LogIn() {
         <form
           onSubmit={LogIn}
           action=""
-          className=" flex flex-col items-center mx-auto  h-[400px] place-content-center bg-custom-light  w-[400px] gap-3  border-4  border-t-custom-slate700 border-l-custom-slate700 border-r-custom-slate200 border-b-slate200  "
+          className=" flex flex-col items-center mx-auto  h-[400px] place-content-center bg-index-light  w-[400px] gap-3  border-4  border-t-index-slate700 border-l-index-slate700 border-r-index-slate200 border-b-index-slate200  "
         >
-          <span className="h-10 w-[100px] font-mono text-l border-4 rounded-xl font-bold border-t-custom-slate700 text-center border-l-custom-slate700 ">
+          <span className="h-10 w-[100px] font-mono text-l border-4 rounded-xl font-bold border-t-index-slate700 text-center border-l-index-slate700 border-r-index-slate200 border-b-index-slate200  ">
             <h1 className="mt-[5px]">LogIn</h1>
           </span>
 
