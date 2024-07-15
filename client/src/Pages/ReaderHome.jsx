@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 // import { removeUser } from "../../features/user/userSlice";
 
 function ReaderHome() {

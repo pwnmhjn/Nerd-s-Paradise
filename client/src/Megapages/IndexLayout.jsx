@@ -1,21 +1,12 @@
-import {
-  InfoSection,
-  SignUp,
-  LogIn,
-  IndexHeader,
-} from "../Components/IndexComponents";
-
-import { useSelector } from "react-redux";
-
+import { Outlet } from "react-router-dom";
+import { InfoSection, IndexHeader } from "../Components/IndexComponents";
 function IndexLayout() {
-  const LogInVisible = useSelector((state) => state.headerReducer.boolean);
-
   return (
     <div className="h-fit ">
       <IndexHeader />
       <div className=" text-center h-screen w-full rounded-lg  bg-index-lessLight m-1  grid grid-cols-12    ">
         <InfoSection />
-        {LogInVisible ? <LogIn /> : <SignUp />}
+        <Outlet />
       </div>
     </div>
   );

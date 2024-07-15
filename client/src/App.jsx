@@ -10,7 +10,8 @@ import IndexAbout from "./Pages/IndexAbout.jsx";
 import { Admin, Author, Book, Chapter } from "./Admin";
 import { ReaderHome, ReaderAbout } from "./Pages/index.js";
 import Toast from "./Custom/Toast/Toast.jsx";
-import { remove } from "../features/toast/toastSlice.js";
+
+import { remove, SelectToast } from "../features/toast/toastSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Container,
@@ -19,11 +20,17 @@ import {
   SucTitle,
   XButton,
 } from "./Custom/Toast/ToastClass.js";
+import LogIn from "./Components/IndexComponents/LogIn.jsx";
+import SignUp from "./Components/IndexComponents/SignUp.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/">
-      <Route index element={<IndexLayout />} />
+    <Route>
+      <Route path="/" element={<IndexLayout />}>
+        <Route index element={<SignUp />} />
+        <Route path="login" element={<LogIn />} />
+        <Route path="register" element={<SignUp />} />
+      </Route>
       <Route path="index-about" element={<IndexAbout />} />
       <Route path="reader" element={<ReaderLayout />}>
         <Route index element={<ReaderHome />} />
@@ -40,16 +47,15 @@ const router = createBrowserRouter(
 
 function App() {
   const dispatch = useDispatch();
-
-  const toast = useSelector((state) => state.toastReducer.toast);
+  const toast = useSelector(SelectToast); // FIXME REMOVE ROOT REDUCER
   const cancelToast = () => {
-    dispatch(remove(false));
+    dispatch(remove());
   };
 
   if (toast.visible === true) {
     setTimeout(() => {
-      dispatch(remove(false));
-    }, 3000);
+      dispatch(remove());
+    }, 2000);
   }
 
   return (
@@ -72,19 +78,3 @@ function App() {
 }
 
 export default App;
-
-// <BrowserRouter>
-//   <Routes>
-//     <Route path="/" element={<IndexLayout />} />
-//     <Route path="/index-about" element={<IndexAbout />} />
-//     <Route path="/reader" element={<ReaderLayout />}>
-//       <Route index element={<ReaderHome />} />
-//       <Route path="about" element={<ReaderAbout />} />
-//     </Route>
-//     <Route path="/admin" element={<Admin />}>
-//       <Route index element={<Book />} />
-//       <Route path="author" element={<Author />} />
-//       <Route path="chapter" element={<Chapter />} />
-//     </Route>
-//   </Routes>
-// </BrowserRouter>

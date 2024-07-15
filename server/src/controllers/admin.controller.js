@@ -13,7 +13,7 @@ const addAuthor = AsyncWrap(async (req, res) => {
 
   //validate
   if ([name, genre, popularity].some((field) => field?.trim() === '')) {
-    throw new ErrorAPI(400, 'field are missing');
+    throw new ErrorAPI(400, 'All Field are required');
   }
   const existingAuthor = await Author.findOne({ name });
 

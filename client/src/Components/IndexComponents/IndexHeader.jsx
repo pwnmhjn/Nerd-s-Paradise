@@ -2,17 +2,9 @@
 
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
-import { setFalse, setTrue } from "../../../features/header/headerSlice";
-import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 function IndexHeader() {
-  const dispatch = useDispatch();
-  const visibleLogin = () => {
-    dispatch(setTrue(true));
-  };
-
-  const visibleSignup = () => {
-    dispatch(setFalse(false));
-  };
+  const Navigate = useNavigate();
 
   return (
     <>
@@ -31,13 +23,13 @@ function IndexHeader() {
         <div className="col-span-6"></div>
         <div className="col-span-1  flex flex-col h-[75px] w-full border-4 mt-1 place-content-center mx-auto border-r-custom-slate200 border-b-custom-slate200 border-t-index-slate700 border-l-index-slate700 ">
           <button
-            onClick={visibleSignup}
+            onClick={() => Navigate("/register")}
             className="border-2 p-1 px-1  hover:text-sm  bg-index-lessDark  hover:bg-index-dark font-bold font-mono   border-r-index-slate700 border-b-index-slate700 border-t-index-slate200 border-l-index-slate200  shadow-2xl  hover:shadow-inner"
           >
             Sign Up
           </button>
           <button
-            onClick={visibleLogin}
+            onClick={() => Navigate("/login")}
             className="border-2 p-1 px-1 hover:text-sm   bg-index-lessDark  hover:bg-index-dark font-mono font-bold    border-r-index-slate700 border-b-index-slate700 border-t-index-slate200 border-l-index-slate200 shadow-2xl  hover:shadow-inner"
           >
             Log in

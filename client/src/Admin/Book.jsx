@@ -1,9 +1,8 @@
 import { useState } from "react";
 import AdminInput from "./adminComponents/AdminInput";
-import { ObjectHasValue } from "../utils/ObjectHasValue";
 import { useDispatch } from "react-redux";
 import { throwFailed, throwSuccess } from "../../features/toast/toastSlice";
-import axios from "axios";
+import { createBook } from "../../Api/adminApi";
 
 function Book() {
   const dispatch = useDispatch();
@@ -18,22 +17,12 @@ function Book() {
     ratings: "",
   });
 
-  // const handleBookInput = (event) => {
-  //   const fieldName = event.target.name;
-  //   const fieldValue = event.target.value;
-  //   setBook((prev) => {
-  //     prev[fieldName] = fieldValue;
-  //     return { ...prev };
-  //   });
-  // };
-
   const handleBookInput = (event) => {
     const { name, value, files } = event.target;
     setBook((prev) => ({ ...prev, [name]: files ? files[0] : value }));
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
     const data = new FormData();
     data.append("title", book.title);
     data.append("titleExtension", book.titleExtension);
@@ -43,46 +32,14 @@ function Book() {
     data.append("blurb", book.blurb);
     data.append("genre", book.genre);
     data.append("ratings", book.ratings);
-    const value = ObjectHasValue(data);
-    if (value) {
-      try {
-        await axios
-          .post("/api/v1/admin/add-book", data, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then((res) => {
-            const response = res.data;
-            dispatch(
-              throwSuccess({
-                visible: true,
-                title: "Success",
-                message: response.message,
-              })
-            );
-          })
-          .then((err) => {
-            const response = err.response.data;
-            dispatch(
-              throwFailed({
-                visible: true,
-                title: "Failed",
-                message: response.message,
-              })
-            );
-          });
-      } catch (error) {
-        console.log(error);
-      }
+
+    event.preventDefault();
+    const response = await createBook(data);
+    console.log(response);
+    if (response.statusCode === 200) {
+      dispatch(throwSuccess(true, "Success", response.message));
     } else {
-      dispatch(
-        throwFailed({
-          visible: true,
-          title: "Failed",
-          message: "Please Enter All Fields",
-        })
-      );
+      dispatch(throwFailed(true, "Failed", response.message));
     }
   };
 

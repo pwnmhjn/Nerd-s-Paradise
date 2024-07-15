@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { LogInBtnClass } from "../../tailwindClass/BtnStyle";
 import { throwFailed, throwSuccess } from "../../../features/toast/toastSlice";
 import { setUser } from "../../../features/user/userSlice";
-import { logUser } from "../../../Api/user.js";
+import { logUser } from "../../../Api/userApi.js";
 
 function LogIn() {
   const Navigate = useNavigate();
@@ -28,56 +28,11 @@ function LogIn() {
     if (response.statusCode === 200) {
       const user = response.data.user;
       dispatch(setUser(user));
-      dispatch(
-        throwSuccess({
-          visible: true,
-          title: "Success",
-          message: response.message,
-        })
-      );
+      dispatch(throwSuccess(true, "Success", response.message));
       Navigate("/reader");
     } else {
-      dispatch(
-        throwFailed({
-          visible: true,
-          title: "Failed",
-          message: response.message,
-        })
-      );
+      dispatch(throwFailed(true, "Failed", response.message));
     }
-
-    // if (ObjectHasValue(userFields)) {
-    //   try {
-    //     const res = await axios.post("/api/v1/users/login", userFields);
-    //     const response = res.data;
-    //     dispatch(setUser(response.data.user));
-    //     dispatch(
-    //       throwSuccess({
-    //         visible: true,
-    //         title: "Success",
-    //         message: response.message,
-    //       })
-    //     );
-    //     Navigate("/reader");
-    //   } catch (error) {
-    //     const response = error.response.data;
-    //     dispatch(
-    //       throwFailed({
-    //         visible: true,
-    //         title: "Failed",
-    //         message: response.message,
-    //       })
-    //     );
-    //   }
-    // } else {
-    //   dispatch(
-    //     throwFailed({
-    //       visible: true,
-    //       title: "Failed",
-    //       message: "Password or Username is Missing",
-    //     })
-    //   );
-    // }
   };
   return (
     <>

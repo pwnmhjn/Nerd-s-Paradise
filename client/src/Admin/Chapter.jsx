@@ -1,9 +1,8 @@
 import { useState } from "react";
 import AdminInput from "./adminComponents/AdminInput";
-import { ObjectHasValue } from "../utils/ObjectHasValue";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { throwFailed, throwSuccess } from "../../features/toast/toastSlice";
+import { createChapter } from "../../Api/adminApi";
 function Chapter() {
   const dispatch = useDispatch();
   const [chapter, setChapter] = useState({
@@ -25,46 +24,11 @@ function Chapter() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const value = ObjectHasValue(chapter);
-    if (value) {
-      try {
-        axios
-          .post("/api/v1/admin/add-chapter", chapter)
-          .then((res) => {
-            const response = res.data;
-            console.log(response);
-            dispatch(
-              throwSuccess({
-                visible: true,
-                title: "Success",
-                message: response.message,
-              })
-            );
-          })
-          .catch((err) => {
-            const response = err.response.data;
-            console.log(response);
-            dispatch(
-              throwFailed({
-                visible: true,
-                title: "Failed",
-                message: response.message,
-              })
-            );
-          });
-      } catch (error) {
-        console.log(error);
-      }
+    const response = await createChapter(chapter);
+    if (response.staCode === 200) {
+      dispatch(throwSuccess(true, "Success", response.message));
     } else {
-      if (!value) {
-        dispatch(
-          throwFailed({
-            visible: true,
-            title: "Failed",
-            message: "Please Enter All The Fields",
-          })
-        );
-      }
+      dispatch(throwFailed(true, "Failed", response.message));
     }
   };
 
@@ -92,7 +56,7 @@ function Chapter() {
           />
           <AdminInput
             inputName={"ratings"}
-            inputText={"Rate Book"}
+            inputText={"Rate Chapter"}
             type={"number"}
             handleBookInput={handleChapterInput}
           />

@@ -13,24 +13,8 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/admin', adminRouter);
 
 app.use((err, req, res, next) => {
+  console.log(err);
   let { statusCode = 500, message } = err;
   res.status(statusCode).json(new ResponseAPI(500, null, message));
 });
 export { app };
-
-// [
-//   {
-//     title: 'chapter name',
-//     ratings: 'random integer between 1 - 5',
-//     bookName: 'bookname',
-//     chapterNumber: 'sequently',
-//     content: 'empty',
-//   },
-//   {
-//     title: 'chapter name',
-//     ratings: 'random integer between 1 - 5',
-//     bookName: 'bookname',
-//     chapterNumber: 'sequently',
-//     content: 'empty',
-//   },
-// ];

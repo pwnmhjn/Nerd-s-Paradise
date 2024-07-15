@@ -2,12 +2,10 @@ import { useState } from "react";
 import AdminInput from "./adminComponents/AdminInput";
 import { useDispatch } from "react-redux";
 import { throwFailed, throwSuccess } from "../../features/toast/toastSlice";
-import axios from "axios";
-import { ObjectHasValue } from "../utils/ObjectHasValue";
+import { createAuthor } from "../../Api/adminApi";
 
 function Author() {
   const dispatch = useDispatch();
-  const [formKey, setFormKey] = useState(0);
   const [author, setAuthor] = useState({
     name: "",
     popularity: "",
@@ -31,71 +29,12 @@ function Author() {
     data.append("popularity", author.popularity);
     data.append("genre", author.genre);
     data.append("avatar", author.avatar);
-    const value = ObjectHasValue(data);
+    const response = await createAuthor(data);
 
-    if (value) {
-      try {
-        axios
-          .post("/api/v1/admin/add-author", data, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then((res) => {
-            const response = res.data;
-            console.log(response);
-            dispatch(
-              throwSuccess({
-                visible: true,
-                title: "Success",
-                message: response.message,
-              })
-            );
-          })
-          .catch((err) => {
-            const response = err.response.data;
-            console.log(response.message);
-            dispatch(
-              throwSuccess({
-                visible: true,
-                title: "failed",
-                message: response.message,
-              })
-            );
-          });
-
-        setAuthor({
-          name: "",
-          popularity: "",
-          genre: "",
-          avatar: null,
-        });
-        // const response = await axios.post("/api/v1/admin/add-author", data, {
-        //   headers: {
-        //     "Content-Type": "multipart/form-data",
-        //   },
-        // });
-
-        // console.log(response);
-      } catch (error) {
-        const response = error.response.data;
-        dispatch(
-          throwSuccess({
-            visible: true,
-            title: "failed",
-            message: response.message,
-          })
-        );
-      }
+    if (response.statusCode === 200) {
+      dispatch(throwSuccess(true, "Success", response.message));
     } else {
-      dispatch(
-        throwFailed({
-          visible: true,
-          title: "Failed",
-          message: "Please Fill All Fields",
-        })
-      );
-      setFormKey((prev) => prev + 1);
+      dispatch(throwFailed(true, "Failed", response.message));
     }
   };
 
@@ -103,7 +42,6 @@ function Author() {
     <>
       <div className=" w-full flex  items-center justify-center  bg-index-lessLight">
         <form
-          key={formKey}
           onSubmit={handleSubmit}
           className="flex flex-col items-center mx-auto my-10 py-10 place-content-center bg-index-light  w-[50%] gap-3  border-4  border-b-index-slate700 border-r-index-slate200 border-l-index-slate700 border-t-index-slate200"
         >

@@ -1,7 +1,11 @@
-import React from "react";
+import { IndexHeader } from "../Components/IndexComponents";
 
 function IndexAbout() {
-  return <div>IndexAbout</div>;
+  return (
+    <>
+      <IndexHeader />;
+    </>
+  );
 }
 
 export default IndexAbout;

@@ -1,30 +1,29 @@
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import Toast from "../Custom/Toast/Toast";
-import {
-  Container,
-  XButton,
-  ErrTitle,
-  ErrDesc,
-  SucTitle,
-} from "../Custom/Toast/ToastClass";
-import { useSelector, useDispatch } from "react-redux";
-import { remove } from "../../features/toast/toastSlice";
+// import Toast from "../Custom/Toast/Toast";
+// import {
+//   Container,
+//   XButton,
+//   ErrTitle,
+//   ErrDesc,
+//   SucTitle,
+// } from "../Custom/Toast/ToastClass";
+// import { useSelector, useDispatch } from "react-redux";
+// import { remove } from "../../features/toast/toastSlice";
 
+//TODO clean this page
 function Admin() {
-  const toast = useSelector((state) => state.toastReducer.toast);
+  // const toast = useSelector((state) => state.toastReducer.toast);
+  // const dispatch = useDispatch();
+  // const cancelToast = () => {
+  //   dispatch(remove(false));
+  // };
 
-  const dispatch = useDispatch();
-
-  const cancelToast = () => {
-    dispatch(remove(false));
-  };
-
-  if (toast.visible === true) {
-    setTimeout(() => {
-      dispatch(remove(false));
-    }, 3000);
-  }
+  // if (toast.visible === true) {
+  //   setTimeout(() => {
+  //     dispatch(remove(false));
+  //   }, 3000);
+  // }
   return (
     <div>
       <div className=" h-24 bg-index-dark rounded-b-lg w-full grid grid-cols-3 place-content-center">
@@ -54,7 +53,7 @@ function Admin() {
         </Link>
       </div>
       <Outlet />
-      {toast.visible && (
+      {/* {toast.visible && (
         <Toast
           title={toast.title}
           message={toast.message}
@@ -65,7 +64,7 @@ function Admin() {
           ErrDesc={ErrDesc}
           SucTitle={SucTitle}
         />
-      )}
+      )} */}
     </div>
   );
 }

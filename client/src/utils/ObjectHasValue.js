@@ -1,5 +1,7 @@
 export const ObjectHasValue = (obj) => {
-  if (
+  if (!obj.length) {
+    return false;
+  } else if (
     Object.values(obj).some(
       (field) => field === null || field === "" || field === undefined
     )
