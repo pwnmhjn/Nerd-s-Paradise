@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import Button from "../Custom/Toast/Button";
 // import { removeUser } from "../../features/user/userSlice";
 
 function ReaderHome() {
@@ -8,7 +9,7 @@ function ReaderHome() {
   return (
     <div>
       <div className=" ">
-        <h4>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nihil</h4>
+        <Button />
       </div>
     </div>
   );

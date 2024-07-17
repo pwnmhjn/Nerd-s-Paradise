@@ -1,35 +1,36 @@
 /* eslint-disable react/prop-types */
-function Toast({
-  title,
-  message,
-  Container,
-  XButton,
-  ErrTitle,
-  ErrDesc,
-  cancelToast,
-  SucTitle,
-}) {
+function Toast({ title, message, cancelToast }) {
   if (title == "Success") {
     return (
-      <div className={Container}>
-        <button onClick={cancelToast} className={XButton}>
+      <div className="h-[65px] w-[400px] fixed top-6 right-1/3  bg-slate-400 p-1 pl-2 pb-2 border-t-index-slate200 border-l-index-slate200 border-b-index-slate700 border-r-index-slate700  border-4 z-10 ">
+        <button
+          onClick={cancelToast}
+          className="absolute  top-0 right-0 h-6 w-8 font-mono hover:text-lg  bg-transparent"
+        >
           X
         </button>
         <div>
-          <p className={SucTitle}>{title}</p>
-          <p className={ErrDesc}>{message}</p>
+          <p className="font-bold underline-offset-4 text-green-800 underline text-lg  text-start">
+            {title}
+          </p>
+          <p className="text-white text-center  font-medium">{message}</p>
         </div>
       </div>
     );
   } else {
     return (
-      <div className={Container}>
-        <button onClick={cancelToast} className={XButton}>
+      <div className="h-[65px] w-[400px] fixed top-6 right-1/3  bg-slate-400 p-1 pl-2 pb-2 border-t-index-slate200 border-l-index-slate200 border-b-index-slate700 border-r-index-slate700  border-4 z-10">
+        <button
+          onClick={cancelToast}
+          className="absolute top-0 right-0 h-6 w-8 font-mono hover:text-lg  bg-transparent"
+        >
           X
         </button>
         <div>
-          <p className={ErrTitle}>{title}</p>
-          <p className={ErrDesc}>{message}</p>
+          <p className="font-bold underline-offset-4 text-red-800  underline text-lg  text-start">
+            {title}
+          </p>
+          <p className="text-white text-center  font-medium">{message}</p>
         </div>
       </div>
     );

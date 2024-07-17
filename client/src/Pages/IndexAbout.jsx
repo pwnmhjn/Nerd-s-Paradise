@@ -2,9 +2,9 @@ import { IndexHeader } from "../Components/IndexComponents";
 
 function IndexAbout() {
   return (
-    <>
-      <IndexHeader />;
-    </>
+    <div>
+      <IndexHeader />
+    </div>
   );
 }
 
