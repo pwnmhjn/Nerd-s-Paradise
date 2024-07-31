@@ -9,6 +9,7 @@ import {
   Profile,
   IndexAbout,
   Authors,
+  AuthorInfo,
 } from "./Pages/index.js";
 import { remove, SelectToast } from "../features/toast/toastSlice.js";
 import { useDispatch, useSelector } from "react-redux";
@@ -53,9 +54,11 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="reader" element={<ReaderLayout />}>
               <Route index element={<ReaderHome />} />
+
               <Route path="authors" element={<Authors />} />
+              <Route path="authors:id" element={<AuthorInfo />} />
+
               <Route path="profile" element={<Profile />}>
-                {/* <Route path="authors" element={} /> */}
                 <Route path="edit" element={<UserEditForm />} />
                 <Route path="avatar-edit" element={<AvatarEdit />} />
                 <Route path="cover-edit" element={<CoverEdit />} />

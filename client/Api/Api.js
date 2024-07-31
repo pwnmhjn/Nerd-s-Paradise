@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = "/api/v1/users";
+const BASE_URL = "/api/v1";
 
 export default axios.create({
     baseURL: BASE_URL,
@@ -15,6 +15,12 @@ export const axiosPrivate = axios.create({
     },
     withCredentials: true
 })
+
+
+
+
+
+
 
 export const AdminApi = axios.create({
     baseURL: "/api/v1/admin",

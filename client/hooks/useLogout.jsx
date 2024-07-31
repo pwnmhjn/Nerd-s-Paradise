@@ -10,7 +10,7 @@ const useLogout = () => {
 
   const logout = async () => {
     dispatch(removeUser({}));
-    const response = await axiosPrivate("/logout", {
+    const response = await axiosPrivate("/users/logout", {
       withCredentials: true,
     });
     return response;

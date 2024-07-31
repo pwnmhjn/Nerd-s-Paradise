@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true, limit: '16kb' }));
 app.use(express.json({ limit: '16kb' }));
 app.use(cookieParser());
 app.use('/api/v1/users', userRouter);
-app.use("/api/v1/author", authorRouter)
+app.use("/api/v1/authors", authorRouter)
 app.use('/api/v1/admin', adminRouter);
 
 app.use((err, req, res, next) => {

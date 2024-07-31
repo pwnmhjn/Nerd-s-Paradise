@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 export const registerUser = async (cred) => {
   if (ObjectHasValue(cred)) {
     try {
-      const res = await api.post("/register", cred);
+      const res = await api.post("/users/register", cred);
       const response = res.data;
       return response;
     } catch (error) {
@@ -26,7 +26,7 @@ export const registerUser = async (cred) => {
 export const logUser = async (cred) => {
   if (ObjectHasValue(cred)) {
     try {
-      const res = await api.post("/login", cred);
+      const res = await api.post("/users/login", cred);
       const response = res.data;
       return response;
     } catch (error) {

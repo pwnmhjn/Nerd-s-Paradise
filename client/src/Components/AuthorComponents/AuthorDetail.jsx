@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 
-function AuthorDetail() {
+function AuthorDetail({ author }) {
   return (
     <div>
-      <div className="bg-slate-400 h-28 min-w-[500px] rounded-lg flex place-items-center p-4 border-2">
+      <div className="bg-slate-400 h-28 w-[500px] rounded-lg flex place-items-center p-4 border-2">
         <img
-          src="https://i.pinimg.com/236x/37/d7/5d/37d75df5a8aebe746de58eb8784fb49f.jpg"
+          src={author && author.avatar}
           alt=""
           className="w-24 h-24 rounded-full border-1"
         />
         <div className="m-2">
-          <h1 className="font-bold font-mono text-xl"> Name:- Jane Doe</h1>
           <h1 className="font-bold font-mono text-xl">
-            Popularity:- <span>20%</span>
+            Name:- {author && author.name}
+          </h1>
+          <h1 className="font-bold font-mono text-xl">
+            Popularity:-{" "}
+            <span className="text-red-900">{author.popularity}%</span>
           </h1>
         </div>
       </div>
