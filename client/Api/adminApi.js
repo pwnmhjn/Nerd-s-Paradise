@@ -1,17 +1,11 @@
 import axios from "axios";
 import { ObjectHasValue } from "../src/utils/ObjectHasValue";
-
-const api = axios.create({
-  baseURL: "/api/v1/admin",
-  headers: {
-    "Content-Type": "multipart/form-data",
-  },
-});
+import { AdminApi } from "./Api";
 
 export const createAuthor = async (cred) => {
   if (ObjectHasValue(cred) === true) {
     try {
-      const res = await api.post("/add-author", cred);
+      const res = await AdminApi.post("/add-author", cred);
       const response = res.data;
       return response;
     } catch (error) {
@@ -29,7 +23,7 @@ export const createAuthor = async (cred) => {
 export const createChapter = async (cred) => {
   if (ObjectHasValue(cred) === true) {
     try {
-      const res = await api.post("/add-chapter", cred, {
+      const res = await AdminApi.post("/add-chapter", cred, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -55,7 +49,7 @@ export const createBook = async (cred) => {
   console.log(cred);
   if (ObjectHasValue(cred) === true) {
     try {
-      const res = await api.post("/add-book", cred);
+      const res = await AdminApi.post("/add-book", cred);
       const response = res.data;
       return response;
     } catch (error) {

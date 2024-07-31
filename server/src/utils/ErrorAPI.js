@@ -5,7 +5,7 @@ class ErrorAPI extends Error {
     errors = [],
     stack = ""
   ) {
-    super(message);
+    super();
 
     this.statusCode = statusCode;
     this.message = message;

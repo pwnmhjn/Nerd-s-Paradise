@@ -1,6 +1,5 @@
-/* eslint-disable react/prop-types */
 import logo from "../assets/logo.png";
-import Button from "../../Custom/Toast/Button";
+import { Button } from "../../Custom";
 function IndexHeader() {
   return (
     <>
@@ -18,8 +17,8 @@ function IndexHeader() {
 
         <div className="col-span-6"></div>
         <div className="col-span-1  flex flex-col  h-fit w-fit border-4 place-content-center border-r-custom-slate200 border-b-custom-slate200 border-t-index-slate700 border-l-index-slate700 ">
-          <Button linkName="SignIn" to={"register"} />
-          <Button linkName="Login" to={"login"} />
+          <Button linkName="SignIn" to={"/register"} />
+          <Button linkName="Login" to={"/login"} />
         </div>
         <span className="col-span-1 text-start place-content-center mx-auto h-24 text-xl text-black opacity-1 ">
           <Button linkName="About" to="/index-about" />

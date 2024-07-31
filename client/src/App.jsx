@@ -1,24 +1,34 @@
+import PrivateRoute from "./Components/PrivateRoute.jsx";
+import PersistLogin from "./Components/PersistLogin.jsx";
+import { Toast } from "./Custom/index.js";
+import { IndexLayout, ReaderLayout } from "./Megapages";
+import { Admin, Author, Book, Chapter } from "./Admin";
+import {
+  ReaderHome,
+  ReaderAbout,
+  Profile,
+  IndexAbout,
+  Authors,
+} from "./Pages/index.js";
+import { remove, SelectToast } from "../features/toast/toastSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+import { LogIn, SignUp } from "./Components/IndexComponents";
 import {
   createBrowserRouter,
   createRoutesFromElements,
   RouterProvider,
   Route,
 } from "react-router-dom";
-import ReaderLayout from "./Megapages/ReaderLayout.jsx";
-import IndexLayout from "./Megapages/IndexLayout.jsx";
-import IndexAbout from "./Pages/IndexAbout.jsx";
-import { Admin, Author, Book, Chapter } from "./Admin";
-import { ReaderHome, ReaderAbout } from "./Pages/index.js";
-import Toast from "./Custom/Toast/Toast.jsx";
-import { remove, SelectToast } from "../features/toast/toastSlice.js";
-import { useDispatch, useSelector } from "react-redux";
-
-import LogIn from "./Components/IndexComponents/LogIn.jsx";
-import SignUp from "./Components/IndexComponents/SignUp.jsx";
+import {
+  AvatarEdit,
+  CoverEdit,
+  UserEditForm,
+} from "./Components/ReaderComponents/index.js";
 
 function App() {
   const dispatch = useDispatch();
   const toast = useSelector(SelectToast);
+  // console.log(JSON.stringify(import.meta.env)); //TODO  Config ENV
   const cancelToast = () => {
     dispatch(remove());
   };
@@ -38,14 +48,27 @@ function App() {
           <Route path="register" element={<SignUp />} />
         </Route>
         <Route path="/index-about" element={<IndexAbout />} />
-        <Route path="reader" element={<ReaderLayout />}>
-          <Route index element={<ReaderHome />} />
-          <Route path="about" element={<ReaderAbout />} />
-        </Route>
-        <Route path="/admin" element={<Admin />}>
-          <Route index element={<Book />} />
-          <Route path="author" element={<Author />} />
-          <Route path="chapter" element={<Chapter />} />
+        //?Protected Route (Readers)
+        <Route element={<PersistLogin />}>
+          <Route element={<PrivateRoute />}>
+            <Route path="reader" element={<ReaderLayout />}>
+              <Route index element={<ReaderHome />} />
+              <Route path="authors" element={<Authors />} />
+              <Route path="profile" element={<Profile />}>
+                {/* <Route path="authors" element={} /> */}
+                <Route path="edit" element={<UserEditForm />} />
+                <Route path="avatar-edit" element={<AvatarEdit />} />
+                <Route path="cover-edit" element={<CoverEdit />} />
+              </Route>
+              <Route path="about" element={<ReaderAbout />} />
+            </Route>
+            //?------------------------------------------
+            <Route path="/admin" element={<Admin />}>
+              <Route path="book" element={<Book />} />
+              <Route path="author" element={<Author />} />
+              <Route path="chapter" element={<Chapter />} />
+            </Route>
+          </Route>
         </Route>
       </Route>
     )

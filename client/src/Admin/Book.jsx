@@ -34,6 +34,7 @@ function Book() {
     data.append("ratings", book.ratings);
 
     event.preventDefault();
+    console.log(data);
     const response = await createBook(data);
     console.log(response);
     if (response.statusCode === 200) {

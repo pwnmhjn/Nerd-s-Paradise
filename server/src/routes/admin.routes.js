@@ -4,7 +4,7 @@ import {
   addChapter,
   addBook,
 } from '../controllers/admin.controller.js';
-import { upload } from '../middleware/multer.js';
+import { upload } from '../middleware/multer.middleware.js';
 
 const router = Router();
 

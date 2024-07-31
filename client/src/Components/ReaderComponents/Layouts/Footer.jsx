@@ -1,8 +1,8 @@
 function Footer() {
   return (
-    <div className="">
-      <h1>Footer of reader</h1>
-    </div>
+    <>
+      <div className="w-full h-40 bg-slate-700 "></div>
+    </>
   );
 }
 

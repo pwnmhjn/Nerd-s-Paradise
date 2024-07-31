@@ -1,12 +1,9 @@
 import axios from "axios";
 import { ObjectHasValue } from "../src/utils/ObjectHasValue";
-
-const api = axios.create({
-  baseURL: "/api/v1/users",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+import api from "./Api"
+import { axiosPrivate } from "./Api";
+import { selectUser } from "../features/user/userSlice";
+import { useSelector } from "react-redux";
 
 export const registerUser = async (cred) => {
   if (ObjectHasValue(cred)) {
@@ -43,3 +40,4 @@ export const logUser = async (cred) => {
     return response;
   }
 };
+

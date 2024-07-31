@@ -1,15 +1,16 @@
 import { useSelector } from "react-redux";
-import Button from "../Custom/Toast/Button";
-// import { removeUser } from "../../features/user/userSlice";
+import useRefreshToken from "../../hooks/useRefreshToken";
+import { selectUser } from "../../features/user/userSlice";
+import useLogout from "../../hooks/useLogout";
+import User from "../Admin/User";
+import { useNavigate } from "react-router-dom";
+import Chapter from "../Components/ReaderComponents/Chapter";
 
 function ReaderHome() {
-  const user = useSelector((state) => state.userReducer.user);
-  console.log(user);
-
   return (
     <div>
-      <div className=" ">
-        <Button />
+      <div className="">
+        <Chapter />
       </div>
     </div>
   );

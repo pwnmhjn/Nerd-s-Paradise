@@ -5,9 +5,9 @@ import Footer from "../Components/ReaderComponents/Layouts/Footer";
 
 function ReaderLayout() {
   return (
-    <div className="">
+    <div className="flex  bg-slate-300 flex-col">
       <Header />
-      <div className="">
+      <div className="h-full flex">
         <Sidebar />
         <Outlet />
       </div>
